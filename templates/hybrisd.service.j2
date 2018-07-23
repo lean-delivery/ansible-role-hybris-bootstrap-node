@@ -1,0 +1,22 @@
+[Unit]
+Description=Service for run Hybris as a service
+After=syslog.target
+After=network.target
+
+[Service]
+Type=forking
+PIDFile={{ hybrisd_service.service_pid }}
+WorkingDirectory={{ hybrisd_service.platform_home }}
+
+User={{ hybrisd_service.username }}
+Group={{ hybrisd_service.groupname }}
+
+OOMScoreAdjust=-100
+ExecStart=/bin/bash -c './{{ hybrisd_service.service_exec }} start'
+ExecStop=/bin/bash -c './{{ hybrisd_service.service_exec }} stop'
+
+TimeoutSec={{ hybrisd_service.service_timeout }}
+Restart={{ hybrisd_service.service_restart }}
+
+[Install]
+WantedBy=multi-user.target

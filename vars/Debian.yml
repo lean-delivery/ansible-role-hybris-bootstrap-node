@@ -1,0 +1,18 @@
+---
+requirements:
+  - "unzip"
+  - "zip"
+  - "wget"
+  - "lsof"
+  - "telnet"
+  - "openssl"
+  - "curl"
+  - "net-tools"
+  - "python"
+  - "systemd"
+  - "redhat-lsb-core"
+  - "policycoreutils-python"
+  - "libsemanage-python"
+  - "libselinux-python"
+  - "python-argparse"
+  - "python-pip"

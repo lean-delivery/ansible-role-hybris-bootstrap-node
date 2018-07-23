@@ -1,0 +1,4 @@
+#!/bin/bash
+
+localaddr="`ip -4 route get 8.8.8.8 | awk '{print $NF}' | head -1` localaddr" && sed -i "/localaddr/c$localaddr" /etc/hosts
+

@@ -1,0 +1,6 @@
+---
+
+- name: Enable connections to HTTP port
+  seport: ports="{{ hybris_selinux_ports }}" proto=tcp setype=http_port_t state=present
+  when: ansible_selinux.status == "enabled" and ansible_selinux.mode != "disabled"
+  become: True

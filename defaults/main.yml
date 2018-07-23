@@ -1,0 +1,65 @@
+---
+## Hybris preinstall files
+htools_files:
+  h-up:
+    path: "opt/hybris-tools/h-up"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  ifup-local:
+    path: "sbin/ifup-local"
+    owner: "root"
+    group: "root"
+    mode: "0755"
+  hybris-preinstall.1:
+    path: "usr/share/man/man1/hybris-preinstall.1"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+hybris_path: "/opt/hybris"
+hybris_platform_path: "{{ hybris_path }}/bin/platform"
+
+##
+# vars for h-tools_config
+htools:
+  username: "hybris"
+  groupname: "hybris"
+  hybris_path: "{{ hybris_path }}"
+  hybris_tools_path: "/opt/hybris-tools"
+  download_dir: "/tmp"
+  download_mask: "hybris*.zip"
+  upload_dir: "{{ hybris_path }}"
+  remove_packages: True
+  purge_hybris_home: False
+  legacy_structure: False
+  env_type: ""
+  server_type: ""
+  artifact_storage: "http://artifactory.example.com/download"
+  tomcat_wrapper: ""
+  initialization_error_strings: "ERROR(.*)"
+  initialization_log_check: True
+
+hybris_env:
+  env_path: "/etc/profile.d/hybris_path.sh"
+  ant_opts: "-Xmx512m -Dfile.encoding=UTF-8"
+  platform_home: "{{ hybris_platform_path }}"
+  ant_home: "{{ hybris_platform_path }}/apache-ant-1.9.1"
+  custom_ant_targets_path: "{{ hybris_path }}\
+  /bin/custom/buildscripts/resources/buildscripts/ant"
+
+hybrisd_service:
+  username: "hybris"
+  groupname: "hybris"
+  platform_home: "{{ hybris_platform_path }}"
+  service_path: "/etc/systemd/system/hybrisd.service"
+  service_pid: "{{ hybris_platform_path }}/tomcat/bin/hybrisPlatform.pid"
+  service_timeout: "900"
+  service_restart: "always"
+  service_exec: "hybrisserver.sh"
+
+# defaults file for node-hybris-prepare
+hybris_selinux_ports: "9001,9002"
+fix_selinux_http: True
+
+set_localaddr: True

@@ -1,0 +1,9 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: False
+  tasks:
+    - name: Install python for Ansible
+      raw: test -e /usr/bin/python || (yum -y update && yum install -y python-minimal python-zipstream)
+      become: True
+      changed_when: False

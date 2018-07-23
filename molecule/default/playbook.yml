@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    set_localaddr: False
+  roles:
+    - role: node-hybris-prepare

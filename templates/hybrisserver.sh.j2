@@ -1,0 +1,29 @@
+#!/bin/sh
+# -----------------------------------------------------------------------------
+# Fake Script for the node-hybris-prepare role
+#
+
+MODE=$1
+
+if [ "$MODE" = "" ] ; then
+        MODE="run"
+fi
+
+case $MODE in
+        "minimal" | "-m" )
+                COMMAND="echo Mode: minimal"
+                ;;
+        "debug" | "-d" )
+                COMMAND="echo Mode: debug"
+                ;;
+        "jprofiler" | "-j" )
+                COMMAND="echo Mode: jpprofiler"
+                ;;
+        "version" | "-v" )
+                ;;
+        * )
+                COMMAND="echo Mode: version"
+                ;;
+esac
+
+exec $COMMAND

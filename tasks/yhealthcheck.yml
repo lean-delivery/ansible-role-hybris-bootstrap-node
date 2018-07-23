@@ -1,0 +1,56 @@
+---
+- name: create "{{ htools.groupname }}" group
+  group:
+    name: "{{ htools.groupname }}"
+    state: present
+  become: True
+
+- name: create "{{ htools.username }}" user
+  user:
+    name: "{{ htools.username }}"
+    shell: /bin/bash
+    groups: "{{ htools.groupname }}"
+  become: True
+
+- name: create hybris directory and set permissions
+  file:
+    path: "{{ htools.hybris_path }}"
+    owner: "{{ htools.username }}"
+    group: "{{ htools.groupname }}"
+    state: directory
+    recurse: True
+  become: True
+
+- name: add localaddr record to hosts
+  blockinfile:
+    path: /etc/hosts
+    block: |
+      {% for iter in item %}
+        {{ ansible_default_ipv4.address }} {{ iter }}
+      {% endfor %}
+    marker: "# {mark} ANSIBLE MANAGED BLOCK"
+  with_together:
+    - "{{['localaddr']}}"
+  when: set_localaddr
+  become: True
+
+- name: create hybris service files
+  template:
+    src: "hybrisd.service.j2"
+    dest: "{{ hybrisd_service.service_path }}"
+    owner: root
+    group: root
+    mode: 0644
+    backup: True
+  become: True
+  notify:
+    - propagate hybrisd
+
+- name: create profile file
+  template:
+    src: "hybris_env.j2"
+    dest: "{{ hybris_env.env_path }}"
+    owner: root
+    group: root
+    mode: 0644
+  become: True

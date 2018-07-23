@@ -1,0 +1,18 @@
+exclude_paths:
+ - ./.travis.yml 
+ - ./.gitlab-ci.yml
+ - ./molecule/cloud-epc/create.yml
+ - ./molecule/cloud-epc/destroy.yml
+ - ./molecule/cloud-epc/prepare.yml
+ - ./molecule/cloud-aws/create.yml
+ - ./molecule/cloud-aws/destroy.yml
+ - ./molecule/cloud-aws/prepare.yml
+ - ./molecule/default/create.yml
+ - ./molecule/default/destroy.yml
+ - ./molecule/default/prepare.yml
+skip_list:
+  - skip_ansible_lint
+rulesdir:
+  - ~/ansible-lint-rules/rules/
+use_default_rules: true
+verbosity: 1
