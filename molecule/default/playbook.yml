@@ -5,4 +5,3 @@
     set_localaddr: False
   roles:
     - role: ansible-role-bootstrap-hybris-node
-
