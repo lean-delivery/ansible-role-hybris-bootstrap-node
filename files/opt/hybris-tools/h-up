@@ -12,7 +12,7 @@ import urllib2
 import sys
 from bs4 import *
 
-setting = "/etc/sysconfig/h-tools"
+setting = "/etc/default/h-tools"
 
 #To check if ant target has no issues. Basic error counter
 # defaul value is 0
@@ -208,7 +208,7 @@ if __name__ == "__main__":
         print "file " + config["platform_home"] + '/lib/dbdriver/external-dependencies.xml' + " not found"
         pass
 
-    #To use this section need to set legacy_structure = False in /etc/sysconfig/h-tools
+    #To use this section need to set legacy_structure = False in /etc/default/h-tools
     #Run custom ant deploy target if env_type and/or server_type are defined
     #Run ant deploy with -Denv and -Dtype will copy the right local.properties file to the config dir
     if not config["legacy_structure"]:
@@ -250,7 +250,7 @@ if __name__ == "__main__":
         if config["h_sysupdate"]:
             ant_log_out.append(h_ant("incrementalupdate", config["username"], config["platform_home"]))
 
-    #legacy_structure = True is set in /etc/sysconfig/h-tools by default
+    #legacy_structure = True is set in /etc/default/h-tools by default
     #Copy local.properties file only if the server_type is not defined
     if config["legacy_structure"]:
         print "[INFO] The default legacy git repo structure is used to run this script"

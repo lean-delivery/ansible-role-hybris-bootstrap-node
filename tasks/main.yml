@@ -26,8 +26,8 @@
 
 - name: copy hybris-preinstall config file
   template:
-    src: "{{ role_path }}/templates/etc/sysconfig/h-tools.j2"
-    dest: /etc/sysconfig/h-tools
+    src: "{{ role_path }}/templates/etc/default/h-tools.j2"
+    dest: /etc/default/h-tools
     owner: root
     group: root
     mode: 0600

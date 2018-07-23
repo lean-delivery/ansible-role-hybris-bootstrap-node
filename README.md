@@ -6,7 +6,7 @@ Node hybris prepare
 
 This role:
   - prepares host on CentOS 7 to deploy SAP Hybris(c) artifacts.
-  - updates configuration file for h-up (/etc/sysconfig/h-tools)
+  - updates configuration file for h-up (/etc/default/h-tools)
 Current role can be installed on OS Linux 7.*
 
 Role tasks
