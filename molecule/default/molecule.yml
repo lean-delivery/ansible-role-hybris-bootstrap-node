@@ -5,19 +5,9 @@ driver:
   name: docker
 lint:
   name: yamllint
-  options:
-    config-file: molecule/yamllint.yml
 platforms:
-  - name: node-hybris-prepare-cetos7
-    groups:
-      - hybris_ct
+  - name: instance
     image: centos:7
-    privileged: True
-# - name: node-hybris-prepare-ubuntu1604
-#   groups:
-#     - hybris_ct
-#   image: ubuntu:xenial
-#   privileged: True
 provisioner:
   name: ansible
   lint:
@@ -28,3 +18,4 @@ verifier:
   name: testinfra
   lint:
     name: flake8
+    enabled: true
