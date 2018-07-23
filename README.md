@@ -1,8 +1,7 @@
 Node hybris prepare
 =========
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-jboss/master/LICENSE)
-[![build status](https://git.epam.com/dip-roles/node-hybris-prepare/badges/master/build.svg)](https://git.epam.com/dip-roles/node-hybris-prepare/pipelines)
-
+[![Build Status](https://travis-ci.org/lean-delivery/ansible-role-bootstrap-hybris-node.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-bootstrap-hybris-node)
 ## Summary
 
 This role:
