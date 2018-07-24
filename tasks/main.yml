@@ -13,7 +13,7 @@
   with_items:
     - lxml
     - beautifulsoup4
-    - boto3	
+    - boto3
   become: True
 
 - name: create hybris-tools directory
