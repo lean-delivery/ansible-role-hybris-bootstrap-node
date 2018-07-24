@@ -63,7 +63,7 @@ Requirements
 	  default: ``
 	- `server_type` - hybris node type (e.g. be, backend, fe, frontend, batch, front, etc)
 	  default: ``
-	- `artifact_storage` - artifact storage url. Http only supported. S3 is under testing. To use s3 use `se://bucket/folder`
+	- `artifact_storage` - artifact storage url. Http only supported. S3 is under testing. To use s3 use `s3://bucket/folder`
 	  default: `http://artifactory.example.com/download`
 	- `tomcat_wrapper` - use custom tomcat wrapper in tomcat dir
 	  default: ``
@@ -114,7 +114,7 @@ Example Playbook
   hosts: all
   roles:
     - role: lean-delivery.ansible-role-java
-	  java_major_version: 8
+      java_major_version: 8
       java_minor_version: 181
       java_arch: "x64"
       java_package: "jdk"
