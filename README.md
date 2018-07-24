@@ -63,7 +63,7 @@ Requirements
 	  default: ``
 	- `server_type` - hybris node type (e.g. be, backend, fe, frontend, batch, front, etc)
 	  default: ``
-	- `artifact_storage` - artifact storage url. Http only supported. S3 is uner testing.
+	- `artifact_storage` - artifact storage url. Http only supported. S3 is under testing. To use s3 use `se://bucket/folder`
 	  default: `http://artifactory.example.com/download`
 	- `tomcat_wrapper` - use custom tomcat wrapper in tomcat dir
 	  default: ``
@@ -71,6 +71,8 @@ Requirements
 	  default: `ERROR(.*)`
 	- `initialization_log_check` - to enable error check
 	  default: `True`
+	- `keep_log_dir` - keep log files directory
+	  default: `False`
   - `hybris_env` - hybris variables
     - `env_path` - hybris profile variables file path
 	  default: `/etc/profile.d/hybris_path.sh`

@@ -1,5 +1,5 @@
 .\" Manpage for hybris-preinstall.
-.\" Contact tsimafei_khrol@rpam.com to correct errors or typos in this man.
+
 .TH man 8 "13 April 2017" "1.0" "hybris-preinstall man page"
 .SH NAME
 hybris-preinstall
@@ -9,43 +9,23 @@ hybris-preinstall
 .PP
 Hybris-preinstall can be installed as a package. To do this you should:
 .PP
-1. Create yum repository /etc/yum.repos.d/epm-esp.repo with the following content:
-
-   [EPM-ESP]
-
-   name=EPM-ESP
-
-   baseurl=https://touch.epm-esp.projects.epam.com/yum/se-toolkit/
-
-   enabled=1
-
-   gpgcheck=0
-.PP
-2. Install hybris-preinstall:
-   \fByum install hybris-preinstall\fP
-
-To update existing hybris-preinstall installation, execute:
-   \fB yum update hybris-preinstall\fP
+1. Install using ansible https://github.com/lean-delivery/ansible-role-bootstrap-hybris-node
 
 After hybris-preinstall is installed there will be following components available:
 .sp
-.I \fR 1. healthcheck utility: /opt/hybris-tools/healthcheck
+.I \fR 1. h-up utility: /opt/hybris-tools/h-up
 .br
-.I \fR 2. h-up utility: /opt/hybris-tools/h-up
+.I \fR 2. configuration file for hybris toolkit: /etc/default/h-tools
 .br
-.I \fR 3. configuration file for hybris toolkit: /etc/default/h-tools
-.br
-.I \fR 4. service for hybris quick start/stop: /etc/systemd/system/hybrisd.service
+.I \fR 3. service for hybris quick start/stop: /etc/systemd/system/hybrisd.service
 .PP
 .SH COMPONENTS DESCRIPTION
 .sp 2i
 .IP "1. Hybris toolkit \fBconfiguration file\fP description (/etc/default/h-tools):"
 .sp 2i
-Here are properties that can be changed during standart process. The other properties tipically remain in the default state.
+Here are properties that can be changed during standart process. The other properties typically remain in the default state.
 .sp
    \fBlegacy_structure\fP - defines what kind of git structure to use
-        if True - it supports previous git structure
-        if False - supports new structure described in https://kb.epam.com/display/EPMESPECTPL/Repository+Structure
 .sp
    \fBenv_type\fP - Property for environment name: qa1, prod, perf to copy appropriate local.property located in config/environments/<env_type> folder (for new git structure) or config/environments/<env_type>.local.properties (for old git structure)
 .sp
@@ -57,30 +37,7 @@ Here are properties that can be changed during standart process. The other prope
 .sp
    \fBinitialization_log_check\fP - defines if initialization log file should be parsed for searching strings matching <initialization_error_strings> regular expression
 .sp 4i
-.IP "2. \fBHealthcheck utility\fP"
-.sp
-Healthcheck utility should be run before h-up running. It checks system conditions, which are critical for hybris platform installation.
-.sp
-Healthcheck utility performs following operations:
-.sp
-.I \fR * create (update) hybrisd service
-.br
-.I \fR * set (update) hybris-tools environment variables
-.br
-.I \fR * set (update) hybris and ant environment variables
-.br
-.I \fR * check if user hybris exists and create it if necessary
-.br
-.I \fR * check if hybris_path (/opt/hybris by default) exists and creates it if necessary
-.br
-.I \fR * update owner on hybris_path (/opt/hybris by default)
-.sp 2i
-First time healthcheck should be executed without arguments.
-.sp 2i
-If you want to force update of hybrisd servise, hybris-tools environment, hybris and ant environment, healthcheck should be executed with "regenerate" argument:
-    \fB/opt/hybris-tools/healthcheck --regenerate\fP
-.sp 4i
-.IP "3. \fBh-up utility\fP"
+.IP "2. \fBh-up utility\fP"
 .sp
 h-up is utility for hybris platform setup and managing in automated way.
 .sp
@@ -122,7 +79,7 @@ It has following optional arguments:
 .sp
 .I \fR \fB--purge-hybris-home\fP   -   clean Hybris home directory
 .sp 4i
-.IP "4. Service for hybris quick start/stop"
+.IP "3. Service for hybris quick start/stop"
 .sp
 To see hybris status enter:
     \fBsystemctl status hybrisd\fP

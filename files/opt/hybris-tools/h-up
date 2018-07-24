@@ -114,6 +114,10 @@ def h_logparcer(src_log, template):
 
 
 def get_artifact(baseurl, download_dir):
+    if 's3://' in baseurl:
+        get_artifact_from_s3(baseurl, download_dir)
+        return
+
     soup = BeautifulSoup(urllib2.urlopen(baseurl), "lxml")
     # FIXME: move regex to setting. dirty hack
     links = soup.findAll('a', href=True, text=re.compile('.zip'))
@@ -122,6 +126,25 @@ def get_artifact(baseurl, download_dir):
         print baseurl + link.text
         urllib.urlretrieve(baseurl + link.text, download_dir + "/" + link.text)
     pass
+
+
+def get_artifact_from_s3(baseurl, download_dir):
+    import boto3
+
+    bucketName = baseurl.split("://")[1].split("/")[0]
+    build = "/".join(baseurl.split("://")[1].split("/")[1:])
+    bucket = boto3.resource('s3').Bucket(bucketName)
+
+    zipsList = []
+    for obj in bucket.objects.filter(Prefix=build):
+        if '.zip' in obj.key:
+            zipsList.append(obj.key)
+    if not zipsList:
+        print 'Build not found: ' + baseurl
+        sys.exit(1)
+    for zipFile in zipsList:
+        print 'Download ' + zipFile
+        bucket.download_file(zipFile, download_dir + "/" + os.path.basename(zipFile))
 
 
 def select_config(srcpath, dstpath):
@@ -176,8 +199,12 @@ if __name__ == "__main__":
     # TODO: need recheck solution
     if config["deploy_version"] or (not config["d_path"] and config["purge_hybris_home"]):
         try:
+            leave_dirs = []
             if config["h_sysupdate"] or config["h_sysupdate_lite"]:
-                leave_dirs = ['data']
+                leave_dirs.append('data')
+            if config["keep_log_dir"]:
+                leave_dirs.append('log')
+            if (leave_dirs):
                 for item in os.listdir(config["hybris_path"]):
                     if item not in leave_dirs:
                         shutil.rmtree(config["hybris_path"] + "/" + item, ignore_errors=False, onerror=None)
@@ -187,7 +214,7 @@ if __name__ == "__main__":
             pass
 
     if config["deploy_version"]:
-        get_artifact(config["artifact_storage"] + "/" + config["deploy_version"] + "/", config["download_dir"])
+        get_artifact(config["artifact_storage"].rstrip('/') + "/" + config["deploy_version"] + "/", config["download_dir"])
         pass
 
     if config["d_path"]:

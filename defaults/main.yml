@@ -39,6 +39,7 @@ htools:
   tomcat_wrapper: ""
   initialization_error_strings: "ERROR(.*)"
   initialization_log_check: True
+  keep_log_dir: False
 
 hybris_env:
   env_path: "/etc/profile.d/hybris_path.sh"
