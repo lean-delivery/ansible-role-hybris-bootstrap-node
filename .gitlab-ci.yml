@@ -6,6 +6,6 @@ before_script:
   - echo "before script"
 
 playbook-verification:
- stage: test
- script:
-   - echo "playbook verification"
+  stage: test
+  script:
+    - echo "playbook verification"
