@@ -1,7 +1,7 @@
 Node hybris prepare
 =========
-[![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-bootstrap-hybris-node/master/LICENSE)
-[![Build Status](https://travis-ci.org/lean-delivery/ansible-role-bootstrap-hybris-node.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-bootstrap-hybris-node)
+[![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-hybris-bootstrap-node/master/LICENSE)
+[![Build Status](https://travis-ci.org/lean-delivery/ansible-role-hybris-bootstrap-node.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-hybris-bootstrap-node)
 ## Summary
 
 This role:
@@ -118,7 +118,7 @@ Example Playbook
       java_minor_version: 181
       java_arch: "x64"
       java_package: "jdk"
-    - role: lean-delivery.bootstrap_hybris_node
+    - role: lean-delivery.hybris_bootstrap_node
 ```
 
 License

@@ -1,12 +1,12 @@
 ---
 galaxy_info:
-  role_name: "bootstrap_hybris_node"
+  role_name: "hybris-bootstrap-node"
   author: "Lean Delivery team <team@lean-delivery.com>"
   description: "Lean Delivery hybris node preparation"
   company: "Epam Systems"
   license: "Apache"
   min_ansible_version: "2.5"
-  issue_tracker_url: "https://github.com/lean-delivery/ansible-role-bootstrap-hybris-node/issues"
+  issue_tracker_url: "https://github.com/lean-delivery/ansible-role-hybris-bootstrap-node/issues"
   platforms:
     - name: "Ubuntu"
       versions:
