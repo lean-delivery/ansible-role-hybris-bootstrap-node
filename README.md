@@ -1,6 +1,6 @@
 Node hybris prepare
 =========
-[![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-jboss/master/LICENSE)
+[![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-bootstrap-hybris-node/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-bootstrap-hybris-node.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-bootstrap-hybris-node)
 ## Summary
 
@@ -113,20 +113,21 @@ Example Playbook
 - name: Prepare example
   hosts: all
   roles:
-    - role: lean-delivery.ansible-role-java
+    - role: lean-delivery.java
       java_major_version: 8
       java_minor_version: 181
       java_arch: "x64"
       java_package: "jdk"
-    - role: node-hybris-prepare
+    - role: lean-delivery.bootstrap_hybris_node
 ```
 
 License
 -------
 
-Apache2
+Apache
 
 Author Information
 ------------------
 
 authors:
+  - Lean Delivery Team <team@lean-delivery.com>

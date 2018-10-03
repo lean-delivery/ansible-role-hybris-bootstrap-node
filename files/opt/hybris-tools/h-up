@@ -197,7 +197,7 @@ if __name__ == "__main__":
                 config.setdefault(pArg, pValue)
 
     # TODO: need recheck solution
-    if config["deploy_version"] or (not config["d_path"] and config["purge_hybris_home"]):
+    if config["deploy_version"] and (not config["d_path"] and config["purge_hybris_home"]):
         try:
             leave_dirs = []
             if config["h_sysupdate"] or config["h_sysupdate_lite"]:

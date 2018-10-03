@@ -1,11 +1,30 @@
 ---
+# Run all tests
 stages:
-  - test
+  - lint
+  - deployment test
 
 before_script:
-  - echo "before script"
+  - ansible --version
+  - molecule --version
 
-playbook-verification:
-  stage: test
+variables:
+  GET_SOURCES_ATTEMPTS: "5"
+
+Ansible lint:
+  stage: lint
+  before_script:
+    - git clone https://github.com/lean-delivery/ansible-lint-rules.git ~/ansible-lint-rules
   script:
-    - echo "playbook verification"
+    - ansible-lint -c .ansible-lint `find . -regex ".*\.\(yml\)"`
+  after_script:
+    - rm -rf ~/ansible-lint-rules
+  tags:
+    - delegated
+
+Docker hybris-bootstrap-node:
+  stage: deployment test
+  script:
+    - molecule test -s default
+  tags:
+    - docker

@@ -1,7 +1,7 @@
 ---
 - name: Converge
   hosts: all
+  roles:
+    - role: hybris-bootstrap-node
   vars:
     set_localaddr: False
-  roles:
-    - role: ansible-role-bootstrap-hybris-node

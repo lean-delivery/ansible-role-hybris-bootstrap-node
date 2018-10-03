@@ -13,5 +13,4 @@
       loop: "{{ requirements }}"
       loop_control:
         loop_var: package
-
   become: True
