@@ -24,13 +24,8 @@
 - name: "Add localaddr record to hosts"
   blockinfile:
     path: /etc/hosts
-    block: |
-      {% for iter in item %}
-        {{ ansible_default_ipv4.address }} {{ iter }}
-      {% endfor %}
+    block: "{{ ansible_default_ipv4.address }} localaddr"
     marker: "# {mark} ANSIBLE MANAGED BLOCK"
-  with_together:
-    - "{{['localaddr']}}"
   when: set_localaddr
   become: True
 

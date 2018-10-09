@@ -10,7 +10,7 @@
 - name: "Install pip packages"
   pip:
     name: "{{ item }}"
-  with_items:
+  loop:
     - lxml
     - beautifulsoup4
     - boto3
@@ -42,7 +42,7 @@
     owner: "{{ item.value.owner }}"
     group: "{{ item.value.group }}"
     mode: "{{ item.value.mode | int }}"
-  with_dict: "{{ htools_files }}"
+  loop: "{{ htools_files|dict2items }}"
   become: True
 
 - name: "Run healthcheck"
@@ -57,7 +57,7 @@
     recurse: True
   loop_control:
     loop_var: hypath_item
-  with_items:
+  loop:
     - "{{ htools.hybris_path }}/bin/platform/tomcat/bin"
   become: True
 
