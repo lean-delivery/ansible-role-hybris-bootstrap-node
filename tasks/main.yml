@@ -42,7 +42,7 @@
     owner: "{{ item.value.owner }}"
     group: "{{ item.value.group }}"
     mode: "{{ item.value.mode | int }}"
-  loop: "{{ htools_files|dict2items }}"
+  with_dict: "{{ htools_files }}"
   become: True
 
 - name: "Run healthcheck"
