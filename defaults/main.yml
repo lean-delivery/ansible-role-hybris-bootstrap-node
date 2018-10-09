@@ -61,6 +61,5 @@ hybrisd_service:
 
 # defaults file for node-hybris-prepare
 hybris_selinux_ports: "9001,9002"
-fix_selinux_http: True
 
 set_localaddr: True
