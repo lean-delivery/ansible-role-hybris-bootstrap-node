@@ -17,47 +17,42 @@ htools_files:
     group: "root"
     mode: "0644"
 
-hybris_path: "/opt/hybris"
-hybris_platform_path: "{{ hybris_path }}/bin/platform"
-
 ##
 # vars for h-tools_config
-htools:
-  username: "hybris"
-  groupname: "hybris"
-  hybris_path: "{{ hybris_path }}"
-  hybris_tools_path: "/opt/hybris-tools"
-  download_dir: "/tmp"
-  download_mask: "hybris*.zip"
-  upload_dir: "{{ hybris_path }}"
-  remove_packages: True
-  purge_hybris_home: False
-  legacy_structure: False
-  env_type: ""
-  server_type: ""
-  artifact_storage: "http://artifactory.example.com/download"
-  tomcat_wrapper: ""
-  initialization_error_strings: "ERROR(.*)"
-  initialization_log_check: True
-  keep_log_dir: False
+htools_username: "hybris"
+htools_groupname: "hybris"
+htools_hybris_path: "/opt/hybris"
+htools_platform_path: "{{ htools_hybris_path }}/bin/platform"
+htools_hybris_tools_path: "/opt/hybris-tools"
+htools_download_dir: "/tmp"
+htools_download_mask: "hybris*.zip"
+htools_upload_dir: "{{ htools_hybris_path }}"
+htools_remove_packages: True
+htools_purge_hybris_home: False
+htools_legacy_structure: False
+htools_env_type: ""
+htools_server_type: ""
+htools_artifact_storage: "http://artifactory.example.com/download"
+htools_tomcat_wrapper: ""
+htools_initialization_error_strings: "ERROR(.*)"
+htools_initialization_log_check: True
+htools_keep_log_dir: False
 
-hybris_env:
-  env_path: "/etc/profile.d/hybris_path.sh"
-  ant_opts: "-Xmx512m -Dfile.encoding=UTF-8"
-  platform_home: "{{ hybris_platform_path }}"
-  ant_home: "{{ hybris_platform_path }}/apache-ant-1.9.1"
-  custom_ant_targets_path: "{{ hybris_path }}\
-  /bin/custom/buildscripts/resources/buildscripts/ant"
+hybris_env_path: "/etc/profile.d/hybris_path.sh"
+hybris_env_ant_opts: "-Xmx512m -Dfile.encoding=UTF-8"
+hybris_env_platform_home: "{{ htools_platform_path }}"
+hybris_env_ant_home: "{{ htools_platform_path }}/apache-ant-1.9.1"
+hybris_env_custom_ant_targets_path: "{{ htools_hybris_path }}\
+/bin/custom/buildscripts/resources/buildscripts/ant"
 
-hybrisd_service:
-  username: "hybris"
-  groupname: "hybris"
-  platform_home: "{{ hybris_platform_path }}"
-  service_path: "/etc/systemd/system/hybrisd.service"
-  service_pid: "{{ hybris_platform_path }}/tomcat/bin/hybrisPlatform.pid"
-  service_timeout: "900"
-  service_restart: "always"
-  service_exec: "hybrisserver.sh"
+hybrisd_service_username: "hybris"
+hybrisd_service_groupname: "hybris"
+hybrisd_service_platform_home: "{{ htools_platform_path }}"
+hybrisd_service_path: "/etc/systemd/system/hybrisd.service"
+hybrisd_service_pid: "{{ htools_platform_path }}/tomcat/bin/hybrisPlatform.pid"
+hybrisd_service_timeout: "900"
+hybrisd_service_restart: "always"
+hybrisd_service_exec: "hybrisserver.sh"
 
 # defaults file for node-hybris-prepare
 hybris_selinux_ports: "9001,9002"
