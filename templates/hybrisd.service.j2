@@ -5,18 +5,18 @@ After=network.target
 
 [Service]
 Type=forking
-PIDFile={{ hybrisd_service.service_pid }}
-WorkingDirectory={{ hybrisd_service.platform_home }}
+PIDFile={{ hybrisd_service_pid }}
+WorkingDirectory={{ hybrisd_service_platform_home }}
 
-User={{ hybrisd_service.username }}
-Group={{ hybrisd_service.groupname }}
+User={{ hybrisd_service_username }}
+Group={{ hybrisd_service_groupname }}
 
 OOMScoreAdjust=-100
-ExecStart=/bin/bash -c './{{ hybrisd_service.service_exec }} start'
-ExecStop=/bin/bash -c './{{ hybrisd_service.service_exec }} stop'
+ExecStart=/bin/bash -c './{{ hybrisd_service_exec }} start'
+ExecStop=/bin/bash -c './{{ hybrisd_service_exec }} stop'
 
-TimeoutSec={{ hybrisd_service.service_timeout }}
-Restart={{ hybrisd_service.service_restart }}
+TimeoutSec={{ hybrisd_service_timeout }}
+Restart={{ hybrisd_service_restart }}
 
 [Install]
 WantedBy=multi-user.target

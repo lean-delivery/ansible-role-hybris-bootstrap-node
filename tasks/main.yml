@@ -18,7 +18,7 @@
 
 - name: "Create hybris-tools directory"
   file:
-    path: "{{ htools.hybris_tools_path }}"
+    path: "{{ htools_hybris_tools_path }}"
     owner: root
     group: root
     mode: 0755
@@ -52,26 +52,26 @@
   file:
     path: "{{ hypath_item }}"
     state: directory
-    owner: "{{ htools.username }}"
-    group: "{{ htools.groupname }}"
+    owner: "{{ htools_username }}"
+    group: "{{ htools_groupname }}"
     recurse: True
   loop_control:
     loop_var: hypath_item
   loop:
-    - "{{ htools.hybris_path }}/bin/platform/tomcat/bin"
+    - "{{ htools_hybris_path }}/bin/platform/tomcat/bin"
   become: True
 
 - name: "Prepare hybris service"
   template:
     src: hybrisserver.sh.j2
-    dest: "{{ htools.hybris_path }}/bin/platform/hybrisserver.sh"
-    owner: "{{ hybrisd_service.username }}"
-    group: "{{ hybrisd_service.groupname }}"
+    dest: "{{ htools_hybris_path }}/bin/platform/hybrisserver.sh"
+    owner: "{{ hybrisd_service_username }}"
+    group: "{{ hybrisd_service_groupname }}"
     force: False
   become: True
 
 - name: "Make sure h-up may launch successfully"
-  command: "{{ htools.hybris_tools_path }}/h-up --help"
+  command: "{{ htools_hybris_tools_path }}/h-up --help"
   register: command_hu_result
   failed_when: command_hu_result.rc != 0
   changed_when: False

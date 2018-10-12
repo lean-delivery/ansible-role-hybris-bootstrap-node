@@ -34,72 +34,69 @@ Requirements
 ## Role Variables
 --------------	 
   - `htools_files` - map with file names and permissions for hybris preinstall
-  - `hybris_path` - hybris root directory
-    default: `/opt/hybris`
-  - `hybris_platform_path` - path to hybris platform directory
-    default: `/opt/hybris/bin/platform`
-  - `htools` - configuration for hybris preinstall utility
-    - `username` - hybris user name
+  - `htools_username` - hybris user name
 	  default: `hybris`
-	- `groupname` - hybris group name
+	- `htools_groupname` - hybris group name
 	  default: `hybris`
-	- `hybris_path` - hybris root directory
+	- `htools_hybris_path` - hybris root directory
 	  default: `/opt/hybris`
-	- `hybris_tools_path` - hybris preinstall directory
+	- `htools_platform_path` - hybris platform directory
+	  default: `{{ htools_hybris_path }}/bin/platform`
+	- `htools_hybris_tools_path` - hybris preinstall directory
 	  default: `/opt/hybris-tools`
-	- `download_dir` - directory used to download hybris artifacts
+	- `htools_download_dir` - directory used to download hybris artifacts
 	  default: `/tmp`
-	- `download_mask` - hybris artifacts mask
+	- `htools_download_mask` - hybris artifacts mask
 	  default: `hybris*.zip`
-	- `upload_dir` - directory to unpack hybris artifacts
-	  default: `/opt/hybris`
-	- `remove_packages` - option to remove artifacts after unpack
+	- `htools_upload_dir` - directory to unpack hybris artifacts
+	  default: `{{ htools_hybris_path }}`
+	- `htools_remove_packages` - option to remove artifacts after unpack
 	  default: `True`
-	- `purge_hybris_home` - to clean hybris root directory before artifacts unpack
+	- `htools_purge_hybris_home` - to clean hybris root directory before artifacts unpack
 	  default: `False`
-	- `legacy_structure` - option to set what git structure used <TODO: add info>
+	- `htools_legacy_structure` - option to set what git structure used <TODO: add info>
 	  default: `False`
-	- `env_type` - set env type (e.g. QA, DEV, PERF, PROD)
+	- `htools_env_type` - set env type (e.g. QA, DEV, PERF, PROD)
 	  default: ``
-	- `server_type` - hybris node type (e.g. be, backend, fe, frontend, batch, front, etc)
+	- `htools_server_type` - hybris node type (e.g. be, backend, fe, frontend, batch, front, etc)
 	  default: ``
-	- `artifact_storage` - artifact storage url. Http only supported. S3 is under testing. To use s3 use `s3://bucket/folder`
+	- `htools_artifact_storage` - artifact storage url. Http only supported. S3 is under testing. To use s3 use `s3://bucket/folder`
 	  default: `http://artifactory.example.com/download`
-	- `tomcat_wrapper` - use custom tomcat wrapper in tomcat dir
+	- `htools_tomcat_wrapper` - use custom tomcat wrapper in tomcat dir
 	  default: ``
-	- `initialization_error_strings` - pattern to consider as error in hybris preparation output log (e.g. during DB initialization or update).
+	- `htools_initialization_error_strings` - pattern to consider as error in hybris preparation output log (e.g. during DB initialization or update).
 	  default: `ERROR(.*)`
-	- `initialization_log_check` - to enable error check
+	- `htools_initialization_log_check` - to enable error check
 	  default: `True`
-	- `keep_log_dir` - keep log files directory
+	- `htools_keep_log_dir` - keep log files directory
 	  default: `False`
-  - `hybris_env` - hybris variables
-    - `env_path` - hybris profile variables file path
+
+  - `hybris_env_path` - hybris profile variables file path
 	  default: `/etc/profile.d/hybris_path.sh`
-	- `ant_opts` - ant options
+	- `hybris_env_ant_opts` - ant options
 	  default: `-Xmx512m -Dfile.encoding=UTF-8`
-	- `platform_home` - path to hybris platform directory
-	  default: `/opt/hybris/bin/platform`
-	- `ant_home` - ant home directory
-	  default: `/opt/hybris/bin/platform/apache-ant-1.9.1`
-	- `custom_ant_targets_path` - start all ant targets from custom directory (used custom buildscripts module)
-	  default: `/opt/hybris/bin/custom/buildscripts/resources/buildscripts/ant`
-  - `hybrisd_service` - hybrisd service options
-    - `username` - user name for hybrisd service
+	- `hybris_env_platform_home` - path to hybris platform directory
+	  default: `{{ htools_platform_path }}`
+	- `hybris_env_ant_home` - ant home directory
+	  default: `{{ htools_platform_path }}/apache-ant-1.9.1`; for hybris 1808.1 `{{ htools_platform_path }}/apache-ant`
+	- `hybris_env_custom_ant_targets_path` - start all ant targets from custom directory (used custom buildscripts module)
+	  default: `{{ htools_hybris_path }}/bin/custom/buildscripts/resources/buildscripts/ant`
+
+  - `hybrisd_service_username` - user name for hybrisd service
 	  default: `hybris`
-	- `groupname` - group name for hybrisd service
+	- `hybrisd_service_groupname` - group name for hybrisd service
 	  default: `hybris`
-	- `platform_home` - path to hybris platform directory
-	  default: `/opt/hybris/bin/platform`
-	- `service_path` - path to service file
+	- `hybrisd_service_platform_home` - path to hybris platform directory
+	  default: `{{ htools_platform_path }}`
+	- `hybrisd_service_path` - path to service file
 	  default: `/etc/systemd/system/hybrisd.service`
-	- `service_pid` - path to service pid file
-	  default: `/opt/hybris/bin/platform/tomcat/bin/hybrisPlatform.pid`
-	- `service_timeout` - timeout in seconds for service start
+	- `hybrisd_service_pid` - path to service pid file
+	  default: `{{ htools_platform_path }}/tomcat/bin/hybrisPlatform.pid`
+	- `hybrisd_service_timeout` - timeout in seconds for service start
 	  default: `900`
-	- `service_restart` - to restart service by condition
+	- `hybrisd_service_restart` - to restart service by condition
 	  default: `always`
-	- `service_exec` - executable file for hybrisd service
+	- `hybrisd_service_exec` - executable file for hybrisd service
 	  default: `hybrisserver.sh`
   - `hybris_selinux_ports` - ports to add to selinux exception
     default: `9001,9002`
@@ -113,12 +110,12 @@ Example Playbook
 - name: Prepare example
   hosts: all
   roles:
-    - role: lean-delivery.java
+    - role: lean_delivery.java
       java_major_version: 8
       java_minor_version: 181
       java_arch: "x64"
       java_package: "jdk"
-    - role: lean-delivery.hybris_bootstrap_node
+    - role: lean_delivery.hybris_bootstrap_node
 ```
 
 License
