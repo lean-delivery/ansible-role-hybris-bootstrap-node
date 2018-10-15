@@ -21,7 +21,7 @@ htools_files:
 # vars for h-tools_config
 htools_username: "hybris"
 htools_groupname: "hybris"
-htools_hybris_path: "/opt/hybris"
+htools_hybris_path: "/opt"
 htools_platform_path: "{{ htools_hybris_path }}/bin/platform"
 htools_hybris_tools_path: "/opt/hybris-tools"
 htools_download_dir: "/tmp"
