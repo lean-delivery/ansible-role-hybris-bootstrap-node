@@ -39,7 +39,7 @@ Requirements
 	- `htools_groupname` - hybris group name
 	  default: `hybris`
 	- `htools_hybris_path` - hybris root directory
-	  default: `/opt`
+	  default: `/opt/hybris`
 	- `htools_platform_path` - hybris platform directory
 	  default: `{{ htools_hybris_path }}/bin/platform`
 	- `htools_hybris_tools_path` - hybris preinstall directory
@@ -49,7 +49,7 @@ Requirements
 	- `htools_download_mask` - hybris artifacts mask
 	  default: `hybris*.zip`
 	- `htools_upload_dir` - directory to unpack hybris artifacts
-	  default: `{{ htools_hybris_path }}`
+	  default: `/opt`
 	- `htools_remove_packages` - option to remove artifacts after unpack
 	  default: `True`
 	- `htools_purge_hybris_home` - to clean hybris root directory before artifacts unpack
