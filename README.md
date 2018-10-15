@@ -39,7 +39,7 @@ Requirements
 	- `htools_groupname` - hybris group name
 	  default: `hybris`
 	- `htools_hybris_path` - hybris root directory
-	  default: `/opt/hybris`
+	  default: `/opt
 	- `htools_platform_path` - hybris platform directory
 	  default: `{{ htools_hybris_path }}/bin/platform`
 	- `htools_hybris_tools_path` - hybris preinstall directory
