@@ -228,13 +228,6 @@ if __name__ == "__main__":
     # lic
     restore_attr(config["platform_home"] + "/license.sh", "+x")
 
-    # FIXME: dirty hack for drop maven dependencies in DB driver
-    try:
-        os.remove(config["platform_home"] + '/lib/dbdriver/external-dependencies.xml')
-    except OSError:
-        print "file " + config["platform_home"] + '/lib/dbdriver/external-dependencies.xml' + " not found"
-        pass
-
     #To use this section need to set legacy_structure = False in /etc/default/h-tools
     #Run custom ant deploy target if env_type and/or server_type are defined
     #Run ant deploy with -Denv and -Dtype will copy the right local.properties file to the config dir
