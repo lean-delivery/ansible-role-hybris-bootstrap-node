@@ -49,7 +49,7 @@ Requirements
 	- `htools_download_mask` - hybris artifacts mask
 	  default: `hybris*.zip`
 	- `htools_upload_dir` - directory to unpack hybris artifacts
-	  default: `{{ htools_hybris_path }}`
+	  default: `/opt`
 	- `htools_remove_packages` - option to remove artifacts after unpack
 	  default: `True`
 	- `htools_purge_hybris_home` - to clean hybris root directory before artifacts unpack
