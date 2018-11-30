@@ -163,10 +163,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--updateonly', action='store', dest='d_path', 
                         help='Update only selected archive')
-    parser.add_argument('--initialize', action='store_true', dest='h_init', 
+    parser.add_argument('--initialize', nargs='?', const=True, default=False, dest='h_init',
                         help='Runs Hybris initialization')
     parser.add_argument('--updatesystem', nargs='?', const=True, default=False, dest='h_sysupdate', 
                         help='Runs Hybris system update')
+    parser.add_argument('--incrementalupdate', ction='store_true', dest='h_incresysupdate',
+                        help='Runs Hybris system update with migration module')
     parser.add_argument('--updatesystem-lite', nargs='?', const='', default=False, dest='h_sysupdate_lite', 
                         help='Runs Hybris system update without ant build and ant server components')
     parser.add_argument('--deploy-release', action='store', dest='deploy_version', 
@@ -266,8 +268,22 @@ if __name__ == "__main__":
                 fout.writelines(data)
             
         if config["h_init"]:
-            ant_log_out.append(h_ant("initialize", config["username"], config["hybris_custom_ant_targets_path"]))
+            value_type = type(config["h_init"])
+            if value_type is bool:
+                ant_log_out.append(h_ant("initialize", config["username"], config["platform_home"]))
+            elif value_type is str:
+                ant_log_out.append(h_ant("initialize -DconfigFile=" + config["h_init"], config["username"],
+                                         config["platform_home"]))
         if config["h_sysupdate"]:
+            # h_sysupdate value can be bool (True, without config file) or string (path to custom config file)
+            # In case of string value (path to custom config file) we will call ant updatesystem with -DconfigFile param
+            value_type = type(config["h_sysupdate"])
+            if value_type is bool:
+                ant_log_out.append(h_ant("updatesystem", config["username"], config["platform_home"]))
+            elif value_type is str:
+                ant_log_out.append(h_ant("updatesystem -DconfigFile=" + config["h_sysupdate"], config["username"],
+                                         config["platform_home"]))
+        if config["h_incresysupdate"]:
             ant_log_out.append(h_ant("incrementalupdate", config["username"], config["platform_home"]))
 
     #legacy_structure = True is set in /etc/default/h-tools by default
