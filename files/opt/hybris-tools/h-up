@@ -167,7 +167,7 @@ if __name__ == "__main__":
                         help='Runs Hybris initialization')
     parser.add_argument('--updatesystem', nargs='?', const=True, default=False, dest='h_sysupdate', 
                         help='Runs Hybris system update')
-    parser.add_argument('--incrementalupdate', ction='store_true', dest='h_incresysupdate',
+    parser.add_argument('--incrementalupdate', action='store_true', dest='h_incresysupdate',
                         help='Runs Hybris system update with migration module')
     parser.add_argument('--updatesystem-lite', nargs='?', const='', default=False, dest='h_sysupdate_lite', 
                         help='Runs Hybris system update without ant build and ant server components')
