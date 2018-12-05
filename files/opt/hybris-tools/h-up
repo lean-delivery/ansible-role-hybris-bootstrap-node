@@ -268,19 +268,17 @@ if __name__ == "__main__":
                 fout.writelines(data)
             
         if config["h_init"]:
-            value_type = type(config["h_init"])
-            if value_type is bool:
+            if isinstance(config["h_init"], bool):
                 ant_log_out.append(h_ant("initialize", config["username"], config["platform_home"]))
-            elif value_type is str:
+            elif isinstance(config["h_init"], str):
                 ant_log_out.append(h_ant("initialize -DconfigFile=" + config["h_init"], config["username"],
                                          config["platform_home"]))
         if config["h_sysupdate"]:
             # h_sysupdate value can be bool (True, without config file) or string (path to custom config file)
             # In case of string value (path to custom config file) we will call ant updatesystem with -DconfigFile param
-            value_type = type(config["h_sysupdate"])
-            if value_type is bool:
+            if isinstance(config["h_sysupdate"], bool):
                 ant_log_out.append(h_ant("updatesystem", config["username"], config["platform_home"]))
-            elif value_type is str:
+            elif isinstance(config["h_sysupdate"], str):
                 ant_log_out.append(h_ant("updatesystem -DconfigFile=" + config["h_sysupdate"], config["username"],
                                          config["platform_home"]))
         if config["h_incresysupdate"]:
@@ -329,10 +327,9 @@ if __name__ == "__main__":
         if config["h_sysupdate"]:
             # h_sysupdate value can be bool (True, without config file) or string (path to custom config file)
             # In case of string value (path to custom config file) we will call ant updatesystem with -DconfigFile param
-            value_type = type(config["h_sysupdate"])
-            if value_type is bool:
+            if isinstance(config["h_sysupdate"], bool):
                 ant_log_out.append(h_ant("updatesystem", config["username"], config["platform_home"]))
-            elif value_type is str:
+            elif isinstance(config["h_sysupdate"], str):
                 ant_log_out.append(h_ant("updatesystem -DconfigFile="+config["h_sysupdate"], config["username"], config["platform_home"]))
         if config["h_sysupdate_lite"]:
             val = config["h_sysupdate_lite"].strip()
