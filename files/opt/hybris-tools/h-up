@@ -11,6 +11,7 @@ import urllib
 import urllib2
 import sys
 from bs4 import *
+from urlparse import urlparse, urlunparse
 
 setting = "/etc/default/h-tools"
 
@@ -115,6 +116,16 @@ def h_logparcer(src_log, template):
     pass
 
 
+# check whether Nexus Repository Manager is behind the given url
+def check_if_nexus(url):
+    url_for_test = urlunparse(urlparse(url)._replace(path=""))
+    page = urllib2.urlopen(url_for_test)
+    parsed_html = BeautifulSoup(page.read(), 'html.parser')
+    if parsed_html.title.get_text() == "Nexus Repository Manager":
+        print "Nexus Repository Manager detected"
+        return True
+
+
 def get_artifact(baseurl, download_dir):
     if 's3://' in baseurl:
         get_artifact_from_s3(baseurl, download_dir)
@@ -123,11 +134,14 @@ def get_artifact(baseurl, download_dir):
     soup = BeautifulSoup(urllib2.urlopen(baseurl), "lxml")
     # FIXME: move regex to setting. dirty hack
     links = soup.findAll('a', href=True, text=re.compile('.zip'))
+    nexus = check_if_nexus(baseurl)
     for link in links:
-        print link.text
-        print baseurl + link.text
-        urllib.urlretrieve(baseurl + link.text, download_dir + "/" + link.text)
-    pass
+        if nexus:
+            download_url = link.get('href')
+        else:
+            download_url = baseurl + link.text
+        print "Downloading artifact {0} from URL: {1}".format(link.text, download_url)
+        urllib.urlretrieve(download_url, download_dir + "/" + link.text)
 
 
 def get_artifact_from_s3(baseurl, download_dir):
