@@ -11,16 +11,18 @@ import urllib
 import urllib2
 import sys
 from bs4 import *
+from urlparse import urlparse, urlunparse
 
 setting = "/etc/default/h-tools"
 
-#To check if ant target has no issues. Basic error counter
-# defaul value is 0
+# To check if ant target has no issues. Basic error counter
+# default value is 0
 EXITCODE = 0
 
 
-red_color="\033[1;31m"
-no_color='\033[0m'
+red_color = "\033[1;31m"
+no_color = '\033[0m'
+
 
 def unpack(download_path, upload_dir):
     archives = glob.glob(download_path)
@@ -59,14 +61,15 @@ def restore_attr(path, attr):
     print err
     pass
 
+
 def h_ant(ant_target, hybris_user, platform_home):
-    #error status
+    # error status
     ant_error_status = False
-    #if EXITCODE=0
+    # if EXITCODE=0
     global EXITCODE
     if not EXITCODE:
-        h_ant_run = subprocess.Popen(['su', hybris_user, '-c', '. ./setantenv.sh && ant ' + ant_target], stdout=subprocess.PIPE,
-                                     stderr=subprocess.PIPE, cwd=platform_home)
+        h_ant_run = subprocess.Popen(['su', hybris_user, '-c', '. ./setantenv.sh && ant ' + ant_target],
+                                     stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=platform_home)
         log_out = []
         while True:
             line = h_ant_run.stdout.readline()
@@ -85,13 +88,13 @@ def h_ant(ant_target, hybris_user, platform_home):
                 break
         # if get_error is True
         # need get exit code from subprocess h_ant_run
-        # write this errocode to global variable _EXITCODE
+        # write this errcode to global variable _EXITCODE
         if ant_error_status:
             EXITCODE = h_ant_run.returncode
         return log_out
         pass
     else:
-        #returnes empty list
+        # return empty list
         return []
 
 
@@ -113,6 +116,16 @@ def h_logparcer(src_log, template):
     pass
 
 
+# check whether Nexus Repository Manager is behind the given url
+def check_if_nexus(url):
+    url_for_test = urlunparse(urlparse(url)._replace(path=""))
+    page = urllib2.urlopen(url_for_test)
+    parsed_html = BeautifulSoup(page.read(), 'html.parser')
+    if parsed_html.title.get_text() == "Nexus Repository Manager":
+        print "Nexus Repository Manager detected"
+        return True
+
+
 def get_artifact(baseurl, download_dir):
     if 's3://' in baseurl:
         get_artifact_from_s3(baseurl, download_dir)
@@ -121,11 +134,14 @@ def get_artifact(baseurl, download_dir):
     soup = BeautifulSoup(urllib2.urlopen(baseurl), "lxml")
     # FIXME: move regex to setting. dirty hack
     links = soup.findAll('a', href=True, text=re.compile('.zip'))
+    nexus = check_if_nexus(baseurl)
     for link in links:
-        print link.text
-        print baseurl + link.text
-        urllib.urlretrieve(baseurl + link.text, download_dir + "/" + link.text)
-    pass
+        if nexus:
+            download_url = link.get('href')
+        else:
+            download_url = baseurl + link.text
+        print "Downloading artifact {0} from URL: {1}".format(link.text, download_url)
+        urllib.urlretrieve(download_url, download_dir + "/" + link.text)
 
 
 def get_artifact_from_s3(baseurl, download_dir):
@@ -186,8 +202,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
     ant_log_out = []
 
-    #insert/update keys from config with keys and values from arguments
-    #put None value if there is no keys from args in config
+    # insert/update keys from config with keys and values from arguments
+    # put None value if there is no keys from args in config
     for pArg, pValue in args.__dict__.items():
         if pValue:
             if pArg in config.keys():
@@ -206,7 +222,7 @@ if __name__ == "__main__":
                 leave_dirs.append('data')
             if config["keep_log_dir"]:
                 leave_dirs.append('log')
-            if (leave_dirs):
+            if leave_dirs:
                 for item in os.listdir(config["hybris_path"]):
                     if item not in leave_dirs:
                         shutil.rmtree(config["hybris_path"] + "/" + item, ignore_errors=False, onerror=None)
@@ -230,9 +246,9 @@ if __name__ == "__main__":
     # lic
     restore_attr(config["platform_home"] + "/license.sh", "+x")
 
-    #To use this section need to set legacy_structure = False in /etc/default/h-tools
-    #Run custom ant deploy target if env_type and/or server_type are defined
-    #Run ant deploy with -Denv and -Dtype will copy the right local.properties file to the config dir
+    # To use this section need to set legacy_structure = False in /etc/default/h-tools
+    # Run custom ant deploy target if env_type and/or server_type are defined
+    # Run ant deploy with -Denv and -Dtype will copy the right local.properties file to the config dir
     if not config["legacy_structure"]:
         print "[INFO] The reconfigured git repo structure is used to run this script"
         if (((config["h_init"] or config["h_sysupdate"]) and config["deploy_version"]) or (not (config["h_init"] or config["h_sysupdate"]) and config["deploy_version"])):
@@ -284,8 +300,8 @@ if __name__ == "__main__":
         if config["h_incresysupdate"]:
             ant_log_out.append(h_ant("incrementalupdate", config["username"], config["platform_home"]))
 
-    #legacy_structure = True is set in /etc/default/h-tools by default
-    #Copy local.properties file only if the server_type is not defined
+    # legacy_structure = True is set in /etc/default/h-tools by default
+    # Copy local.properties file only if the server_type is not defined
     if config["legacy_structure"]:
         print "[INFO] The default legacy git repo structure is used to run this script"
         if config["env_type"]:
