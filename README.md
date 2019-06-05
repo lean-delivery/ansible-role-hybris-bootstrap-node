@@ -2,6 +2,11 @@ Node hybris prepare
 =========
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-hybris-bootstrap-node/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-hybris-bootstrap-node.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-hybris-bootstrap-node)
+[![Build Status](https://gitlab.com/lean-delivery/ansible-role-hybris-bootstrap-node/badges/master/build.svg)](https://gitlab.com/lean-delivery/ansible-role-hybris-bootstrap-node/pipelines)
+[![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.hybris__bootstrap__node-blue.svg)](https://galaxy.ansible.com/lean_delivery/hybris_bootstrap_node)
+![Ansible](https://img.shields.io/ansible/role/d/30317.svg)
+![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F30317%2F&query=$.min_ansible_version)
+
 ## Summary
 
 This role:
