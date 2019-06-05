@@ -27,16 +27,16 @@ htools_hybris_tools_path: "/opt/hybris-tools"
 htools_download_dir: "/tmp"
 htools_download_mask: "hybris*.zip"
 htools_upload_dir: "/opt"
-htools_remove_packages: True
-htools_purge_hybris_home: False
-htools_legacy_structure: False
+htools_remove_packages: true
+htools_purge_hybris_home: false
+htools_legacy_structure: false
 htools_env_type: ""
 htools_server_type: ""
 htools_artifact_storage: "http://artifactory.example.com/download"
 htools_tomcat_wrapper: ""
 htools_initialization_error_strings: "ERROR(.*)"
-htools_initialization_log_check: True
-htools_keep_log_dir: False
+htools_initialization_log_check: true
+htools_keep_log_dir: false
 
 hybris_env_path: "/etc/profile.d/hybris_path.sh"
 hybris_env_ant_opts: "-Xmx512m -Dfile.encoding=UTF-8"
@@ -57,4 +57,4 @@ hybrisd_service_exec: "hybrisserver.sh"
 # defaults file for node-hybris-prepare
 hybris_selinux_ports: "9001,9002"
 
-set_localaddr: True
+set_localaddr: true

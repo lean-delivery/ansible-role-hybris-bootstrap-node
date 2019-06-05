@@ -2,6 +2,11 @@ Node hybris prepare
 =========
 [![License](https://img.shields.io/badge/license-Apache-green.svg?style=flat)](https://raw.githubusercontent.com/lean-delivery/ansible-role-hybris-bootstrap-node/master/LICENSE)
 [![Build Status](https://travis-ci.org/lean-delivery/ansible-role-hybris-bootstrap-node.svg?branch=master)](https://travis-ci.org/lean-delivery/ansible-role-hybris-bootstrap-node)
+[![Build Status](https://gitlab.com/lean-delivery/ansible-role-hybris-bootstrap-node/badges/master/build.svg)](https://gitlab.com/lean-delivery/ansible-role-hybris-bootstrap-node/pipelines)
+[![Galaxy](https://img.shields.io/badge/galaxy-lean__delivery.hybris__bootstrap__node-blue.svg)](https://galaxy.ansible.com/lean_delivery/hybris_bootstrap_node)
+![Ansible](https://img.shields.io/ansible/role/d/30317.svg)
+![Ansible](https://img.shields.io/badge/dynamic/json.svg?label=min_ansible_version&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F30317%2F&query=$.min_ansible_version)
+
 ## Summary
 
 This role:
@@ -51,11 +56,11 @@ Requirements
 	- `htools_upload_dir` - directory to unpack hybris artifacts
 	  default: `/opt`
 	- `htools_remove_packages` - option to remove artifacts after unpack
-	  default: `True`
+	  default: `true`
 	- `htools_purge_hybris_home` - to clean hybris root directory before artifacts unpack
-	  default: `False`
+	  default: `false`
 	- `htools_legacy_structure` - option to set what git structure used <TODO: add info>
-	  default: `False`
+	  default: `false`
 	- `htools_env_type` - set env type (e.g. QA, DEV, PERF, PROD)
 	  default: ``
 	- `htools_server_type` - hybris node type (e.g. be, backend, fe, frontend, batch, front, etc)
@@ -67,9 +72,9 @@ Requirements
 	- `htools_initialization_error_strings` - pattern to consider as error in hybris preparation output log (e.g. during DB initialization or update).
 	  default: `ERROR(.*)`
 	- `htools_initialization_log_check` - to enable error check
-	  default: `True`
+	  default: `true`
 	- `htools_keep_log_dir` - keep log files directory
-	  default: `False`
+	  default: `false`
 
   - `hybris_env_path` - hybris profile variables file path
 	  default: `/etc/profile.d/hybris_path.sh`
@@ -101,7 +106,7 @@ Requirements
   - `hybris_selinux_ports` - ports to add to selinux exception
     default: `9001,9002`
   - `set_localaddr` - add localaddr to hosts file
-    default: `True`
+    default: `true`
 
 Example Playbook
 ----------------
