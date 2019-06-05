@@ -64,29 +64,29 @@ def restore_attr(path, attr):
 
 def h_ant(ant_target, hybris_user, platform_home):
     # error status
-    ant_error_status = false
+    ant_error_status = False
     # if EXITCODE=0
     global EXITCODE
     if not EXITCODE:
         h_ant_run = subprocess.Popen(['su', hybris_user, '-c', '. ./setantenv.sh && ant ' + ant_target],
                                      stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=platform_home)
         log_out = []
-        while true:
+        while True:
             line = h_ant_run.stdout.readline()
             if line != '':
                 print line.rstrip()
                 log_out.append(line.rstrip())
             else:
                 break
-        while true:
+        while True:
             err_line = h_ant_run.stderr.readline()
             if err_line != '':
                 print red_color + "Build failed:" + no_color
                 print red_color + err_line.rstrip() + no_color
-                ant_error_status = true
+                ant_error_status = True
             else:
                 break
-        # if get_error is true
+        # if get_error is True
         # need get exit code from subprocess h_ant_run
         # write this errcode to global variable _EXITCODE
         if ant_error_status:
@@ -123,7 +123,7 @@ def check_if_nexus(url):
     parsed_html = BeautifulSoup(page.read(), 'html.parser')
     if parsed_html.title.get_text() == "Nexus Repository Manager":
         print "Nexus Repository Manager detected"
-        return true
+        return True
 
 
 def get_artifact(baseurl, download_dir):
@@ -133,7 +133,7 @@ def get_artifact(baseurl, download_dir):
 
     soup = BeautifulSoup(urllib2.urlopen(baseurl), "lxml")
     # FIXME: move regex to setting. dirty hack
-    links = soup.findAll('a', href=true, text=re.compile('.zip'))
+    links = soup.findAll('a', href=True, text=re.compile('.zip'))
     nexus = check_if_nexus(baseurl)
     for link in links:
         if nexus:
@@ -179,13 +179,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--updateonly', action='store', dest='d_path', 
                         help='Update only selected archive')
-    parser.add_argument('--initialize', nargs='?', const=true, default=false, dest='h_init',
+    parser.add_argument('--initialize', nargs='?', const=True, default=False, dest='h_init',
                         help='Runs Hybris initialization')
-    parser.add_argument('--updatesystem', nargs='?', const=true, default=false, dest='h_sysupdate', 
+    parser.add_argument('--updatesystem', nargs='?', const=True, default=False, dest='h_sysupdate', 
                         help='Runs Hybris system update')
     parser.add_argument('--incrementalupdate', action='store_true', dest='h_incresysupdate',
                         help='Runs Hybris system update with migration module')
-    parser.add_argument('--updatesystem-lite', nargs='?', const='', default=false, dest='h_sysupdate_lite', 
+    parser.add_argument('--updatesystem-lite', nargs='?', const='', default=False, dest='h_sysupdate_lite', 
                         help='Runs Hybris system update without ant build and ant server components')
     parser.add_argument('--deploy-release', action='store', dest='deploy_version', 
                         help='Deploy from artifact storage')
@@ -225,9 +225,9 @@ if __name__ == "__main__":
             if leave_dirs:
                 for item in os.listdir(config["hybris_path"]):
                     if item not in leave_dirs:
-                        shutil.rmtree(config["hybris_path"] + "/" + item, ignore_errors=false, onerror=None)
+                        shutil.rmtree(config["hybris_path"] + "/" + item, ignore_errors=False, onerror=None)
             else:
-                shutil.rmtree(config["hybris_path"], ignore_errors=false, onerror=None)
+                shutil.rmtree(config["hybris_path"], ignore_errors=False, onerror=None)
         except OSError:
             pass
 
@@ -246,7 +246,7 @@ if __name__ == "__main__":
     # lic
     restore_attr(config["platform_home"] + "/license.sh", "+x")
 
-    # To use this section need to set legacy_structure = false in /etc/default/h-tools
+    # To use this section need to set legacy_structure = False in /etc/default/h-tools
     # Run custom ant deploy target if env_type and/or server_type are defined
     # Run ant deploy with -Denv and -Dtype will copy the right local.properties file to the config dir
     if not config["legacy_structure"]:
@@ -271,12 +271,12 @@ if __name__ == "__main__":
             ant_log_out.append(h_ant("createtypesystem -DtypeSystemName="+config["create_typesystem"], config["username"], config["hybris_custom_ant_targets_path"]))
             # write new type system to local.properties
             with open(config["hybris_path"]+"/config/local.properties", 'r') as fin:
-                data = fin.read().splitlines(true)
-                need_append = true
+                data = fin.read().splitlines(True)
+                need_append = True
                 for i,line in enumerate(data):
                     if "db.type.system.name" in line:
                         data[i] = "db.type.system.name="+config["create_typesystem"]+"\n"
-                        need_append = false
+                        need_append = False
                         break
                 if need_append:
                     data.append("\ndb.type.system.name="+config["create_typesystem"]+"\n")
@@ -290,7 +290,7 @@ if __name__ == "__main__":
                 ant_log_out.append(h_ant("initialize -DconfigFile=" + config["h_init"], config["username"],
                                          config["platform_home"]))
         if config["h_sysupdate"]:
-            # h_sysupdate value can be bool (true, without config file) or string (path to custom config file)
+            # h_sysupdate value can be bool (True, without config file) or string (path to custom config file)
             # In case of string value (path to custom config file) we will call ant updatesystem with -DconfigFile param
             if isinstance(config["h_sysupdate"], bool):
                 ant_log_out.append(h_ant("updatesystem", config["username"], config["platform_home"]))
@@ -300,7 +300,7 @@ if __name__ == "__main__":
         if config["h_incresysupdate"]:
             ant_log_out.append(h_ant("incrementalupdate", config["username"], config["platform_home"]))
 
-    # legacy_structure = true is set in /etc/default/h-tools by default
+    # legacy_structure = True is set in /etc/default/h-tools by default
     # Copy local.properties file only if the server_type is not defined
     if config["legacy_structure"]:
         print "[INFO] The default legacy git repo structure is used to run this script"
@@ -326,12 +326,12 @@ if __name__ == "__main__":
     
             # write new type system to local.properties
             with open(config["hybris_path"]+"/config/local.properties", 'r') as fin:
-                data = fin.read().splitlines(true)
-                need_append = true
+                data = fin.read().splitlines(True)
+                need_append = True
                 for i,line in enumerate(data):
                     if "db.type.system.name" in line:
                         data[i] = "db.type.system.name="+config["create_typesystem"]+"\n"
-                        need_append = false
+                        need_append = False
                         break
                 if need_append:
                     data.append("\ndb.type.system.name="+config["create_typesystem"]+"\n")
@@ -341,7 +341,7 @@ if __name__ == "__main__":
         if config["h_init"]:
             ant_log_out.append(h_ant("initialize", config["username"], config["platform_home"]))
         if config["h_sysupdate"]:
-            # h_sysupdate value can be bool (true, without config file) or string (path to custom config file)
+            # h_sysupdate value can be bool (True, without config file) or string (path to custom config file)
             # In case of string value (path to custom config file) we will call ant updatesystem with -DconfigFile param
             if isinstance(config["h_sysupdate"], bool):
                 ant_log_out.append(h_ant("updatesystem", config["username"], config["platform_home"]))
