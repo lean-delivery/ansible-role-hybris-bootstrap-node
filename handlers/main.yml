@@ -3,6 +3,6 @@
   listen: propagate hybrisd
   systemd:
     name: hybrisd
-    daemon_reload: True
-    enabled: True
-  become: True
+    daemon_reload: true
+    enabled: true
+  become: true

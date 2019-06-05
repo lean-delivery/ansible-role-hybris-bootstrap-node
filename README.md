@@ -51,11 +51,11 @@ Requirements
 	- `htools_upload_dir` - directory to unpack hybris artifacts
 	  default: `/opt`
 	- `htools_remove_packages` - option to remove artifacts after unpack
-	  default: `True`
+	  default: `true`
 	- `htools_purge_hybris_home` - to clean hybris root directory before artifacts unpack
-	  default: `False`
+	  default: `false`
 	- `htools_legacy_structure` - option to set what git structure used <TODO: add info>
-	  default: `False`
+	  default: `false`
 	- `htools_env_type` - set env type (e.g. QA, DEV, PERF, PROD)
 	  default: ``
 	- `htools_server_type` - hybris node type (e.g. be, backend, fe, frontend, batch, front, etc)
@@ -67,9 +67,9 @@ Requirements
 	- `htools_initialization_error_strings` - pattern to consider as error in hybris preparation output log (e.g. during DB initialization or update).
 	  default: `ERROR(.*)`
 	- `htools_initialization_log_check` - to enable error check
-	  default: `True`
+	  default: `true`
 	- `htools_keep_log_dir` - keep log files directory
-	  default: `False`
+	  default: `false`
 
   - `hybris_env_path` - hybris profile variables file path
 	  default: `/etc/profile.d/hybris_path.sh`
@@ -101,7 +101,7 @@ Requirements
   - `hybris_selinux_ports` - ports to add to selinux exception
     default: `9001,9002`
   - `set_localaddr` - add localaddr to hosts file
-    default: `True`
+    default: `true`
 
 Example Playbook
 ----------------
