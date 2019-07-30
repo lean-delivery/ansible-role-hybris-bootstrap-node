@@ -28,8 +28,7 @@ def unpack(download_path, upload_dir):
     archives = glob.glob(download_path)
     for archive in archives:
         print "Unpack " + archive
-        with zipfile.ZipFile(archive) as zf:
-            zf.extractall(upload_dir)
+        os.system("unzip -o -q "+ archive +" -d "+ upload_dir)
         if config["remove_packages"]:
             print "Remove " + archive
             try:
