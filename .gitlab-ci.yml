@@ -42,7 +42,7 @@ AWS hybris-bootstrap-node:
   tags:
     - aws
 
-EPC ansible-role-hybris-bootstrap-node:
+.EPC ansible-role-hybris-bootstrap-node:
   variables:
     EPC_REGION: EPAM-BY2
   stage: deployment test
@@ -50,4 +50,3 @@ EPC ansible-role-hybris-bootstrap-node:
     - molecule test -s cloud-epc-delegated
   tags:
     - delegated
-  allow_failure: true
