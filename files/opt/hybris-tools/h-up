@@ -128,6 +128,29 @@ def check_if_nexus(url):
         print "Nexus Repository Manager detected"
         return True
 
+def repeat(times):
+    def inner(func):
+        def wrapper(*args, **kwargs):
+            for i in range(times):
+                result = func(*args, **kwargs)
+                if result:
+                    return result
+                time.sleep(10)
+            raise RuntimeError("Function {0} did not succeed via {1} attempts".format(func.__name__, times))
+        return wrapper
+    return inner
+
+@repeat(3)
+func download_from_ext_loc(url, path):
+    filename, headers = urllib.urlretrieve(url, path)
+    if headers.has_key("Content-Length"):
+        l = headers.get("Content-Length")
+        rl = os.path.getsize(filename)
+
+        if int(l) != rl:
+            return False
+    return True
+    
 
 def get_artifact(baseurl, download_dir):
     if 's3://' in baseurl:
@@ -143,9 +166,8 @@ def get_artifact(baseurl, download_dir):
             download_url = link.get('href')
         else:
             download_url = baseurl + link.text
-        print "Downloading artifact {0} from URL: {1}".format(link.text, download_url)
-        urllib.urlretrieve(download_url, download_dir + "/" + link.text)
-
+        download_from_ext_loc(download_url, download_dir + "/" + link.text)
+        
 
 def get_artifact_from_s3(baseurl, download_dir):
     import boto3
