@@ -1,5 +1,6 @@
 ---
 - name: Add universe repository for Ubuntu
+  become: true
   apt_repository:
     repo: 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe'
     state: present
