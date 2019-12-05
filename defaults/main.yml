@@ -58,6 +58,3 @@ hybrisd_service_exec: "hybrisserver.sh"
 hybris_selinux_ports: "9001,9002"
 
 set_localaddr: true
-
-# misc
-pip_executable: pip
