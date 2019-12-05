@@ -141,7 +141,7 @@ def repeat(times):
     return inner
 
 @repeat(3)
-func download_from_ext_loc(url, path):
+def download_from_ext_loc(url, path):
     filename, headers = urllib.urlretrieve(url, path)
     if headers.has_key("Content-Length"):
         l = headers.get("Content-Length")
