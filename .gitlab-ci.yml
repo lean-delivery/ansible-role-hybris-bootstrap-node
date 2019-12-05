@@ -50,3 +50,4 @@ EPC ansible-role-hybris-bootstrap-node:
     - molecule test -s cloud-epc-delegated
   tags:
     - delegated
+  allow_failure: true
