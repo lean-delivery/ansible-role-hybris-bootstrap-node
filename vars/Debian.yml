@@ -5,7 +5,6 @@ requirements:
   - "zip"
   - "wget"
   - "lsof"
-  - "telnet"
   - "openssl"
   - "curl"
   - "net-tools"
