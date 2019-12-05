@@ -42,7 +42,7 @@ AWS hybris-bootstrap-node:
   tags:
     - aws
 
-EPC ansible-role-hybris-bootstrap-node:
+.EPC ansible-role-hybris-bootstrap-node:
   variables:
     EPC_REGION: EPAM-BY2
   stage: deployment test

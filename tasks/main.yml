@@ -25,6 +25,8 @@
           - lxml
           - beautifulsoup4
           - boto3
+        executable: '{{ pip_executable }}'
+        extra_args: '--upgrade'
       register: install_packages
       until: install_packages is succeeded
 
