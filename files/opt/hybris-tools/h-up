@@ -169,7 +169,7 @@ def get_artifact(baseurl, download_dir):
             download_url = baseurl + link.text
         print "Downloading artifact {0} from URL: {1}".format(link.text, download_url)
         download_from_ext_loc(download_url, download_dir + "/" + link.text)
-        
+
 
 def get_artifact_from_s3(baseurl, download_dir):
     import boto3
