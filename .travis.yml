@@ -14,7 +14,7 @@ before_install:
 
 install:
   - pip3 install --upgrade ansible==2.9.* docker molecule==2.22 pyOpenSSL PyYAML pytest
-  - pip3 install git+https://github.com/ansible/ansible-lint.git
+  - pip3 install git+https://github.com/ansible/ansible-lint.git@v4.3.0a0
   - ansible --version
   - ansible-lint --version
 
