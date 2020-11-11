@@ -3,4 +3,7 @@
   apt_repository:
     repo: 'deb http://archive.ubuntu.com/ubuntu {{ ansible_distribution_release }} universe'
     state: present
+  register: install_package
+  until: install_package is succeeded
+  become: true
   when: ansible_distribution == 'Ubuntu'
