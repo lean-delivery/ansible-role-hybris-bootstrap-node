@@ -24,7 +24,7 @@
 - name: Add localaddr record to hosts
   blockinfile:
     path: /etc/hosts
-    block: '{{ ansible_default_ipv4.address }} localaddr'
+    block: '{{ ansible_default_ipv4.address }} localaddr {{ ansible_fqdn }}'
     marker: '# {mark} ANSIBLE MANAGED BLOCK'
   when: set_localaddr
   become: true
