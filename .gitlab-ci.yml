@@ -33,7 +33,7 @@ Lint:
 Docker hybris-bootstrap-node:
   stage: deployment test
   script:
-    - pip3 install molecule[docker]
+    - pip3 install --upgrade docker molecule[docker]
     - molecule test -s default
   tags:
     - aws
