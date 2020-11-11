@@ -1,4 +1,5 @@
 ---
+pip_executable: pip
 requirements:
   - "unzip"
   - "zip"
