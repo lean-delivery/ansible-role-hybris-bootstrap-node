@@ -1,5 +1,9 @@
 ---
 # Run all tests
+default:
+  image:
+    name: leandelivery/docker-ansible-ci:ansible-2.9
+
 stages:
   - lint
   - deployment test
@@ -24,7 +28,7 @@ Lint:
   after_script:
     - rm -rf ~/ansible-lint-rules
   tags:
-    - aws
+    - lint
 
 Docker hybris-bootstrap-node:
   stage: deployment test
@@ -33,7 +37,7 @@ Docker hybris-bootstrap-node:
   tags:
     - aws
 
-AWS hybris-bootstrap-node:
+.AWS hybris-bootstrap-node:
   variables:
     AWS_REGION: us-east-1
   stage: deployment test
