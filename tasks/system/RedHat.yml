@@ -1,8 +1,8 @@
 ---
 - name: Enable EPEL repository
-  yum:
-    name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-    state: present
+  command: amazon-linux-extras install epel -y
   register: install_package
-  until: install_package is succeeded
+  until: install_package.rc == 0
+  retries: 3
+  delay: 5
   become: true
