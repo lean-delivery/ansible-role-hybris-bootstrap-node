@@ -6,3 +6,4 @@
   retries: 3
   delay: 5
   become: true
+  when: ansible_distribution == 'Amazon' and ansible_distribution_major_version == '2'
